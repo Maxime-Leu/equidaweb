@@ -1,6 +1,7 @@
 package model;
 
-
+import java.util.ArrayList;
+import model.Vente;
 
 public class Lieu {
 
@@ -9,9 +10,8 @@ public class Lieu {
     private int nbBoxes;
     private String commentaires; 
     
-
+    private ArrayList<Vente> lesVentes;
    
-
     public Lieu() {
     }
 
@@ -58,7 +58,21 @@ public class Lieu {
     public void setCommentaires(String commentaires) {
         this.commentaires = commentaires;
     }
+    
+    public ArrayList<Vente> getLesVentes() {
+        return lesVentes;
+    }
 
+    public void setLesVentes(ArrayList<Vente> lesVentes) {
+        this.lesVentes = lesVentes;
+    }
+
+    public void addUneVente(Vente uneVente){
+        if (lesVentes == null){
+            lesVentes = new ArrayList<Vente>();
+        }
+        lesVentes.add(uneVente);
+    }
  
 
     
