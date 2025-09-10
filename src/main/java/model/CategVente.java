@@ -1,12 +1,14 @@
 package model;
 
-
+import java.util.ArrayList;
 
 public class CategVente {
 
     private int id ;
     private String libelle;
     
+    
+    private ArrayList<Vente> lesVentes;
 
    
 
@@ -34,7 +36,21 @@ public class CategVente {
         this.libelle = libelle;
     }
 
-   
+    public ArrayList<Vente> getLesVentes() {
+        return lesVentes;
+    }
+
+    public void setLesVentes(ArrayList<Vente> lesVentes) {
+        this.lesVentes = lesVentes;
+    }
+
+    public void addUneVente(Vente uneVente){
+        if (lesVentes == null){
+            lesVentes = new ArrayList<Vente>();
+        }
+        lesVentes.add(uneVente);
+    }
+    
     
 
     
