@@ -12,7 +12,7 @@ public class TestVente {
         // création d'une instance de Vente nommé v & v1
         Vente v = new Vente();
         v.setId(2);
-        v.setNom("ventedelapuff");
+        v.setNom("jsp");
         
         Vente v1 = new Vente();
         v1.setId(3);

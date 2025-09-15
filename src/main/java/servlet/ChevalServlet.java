@@ -15,7 +15,6 @@ import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import model.Cheval;
 import model.Race;
-import java.time.LocalDate;
 
 @WebServlet(name = "chevalServlet", value = "/cheval-servlet/*")
 public class ChevalServlet extends HttpServlet {
@@ -84,10 +83,9 @@ public class ChevalServlet extends HttpServlet {
                 Cheval nouveauCheval = new Cheval();
                 nouveauCheval.setNom(nom);
 
-                // Gestion de la date de naissance
+                // Gestion de la date de naissance (en String directement)
                 if (dateNaissanceStr != null && !dateNaissanceStr.isEmpty()) {
-                    LocalDate dateNaissance = LocalDate.parse(dateNaissanceStr);
-                    nouveauCheval.setDateNaissance(dateNaissance);
+                    nouveauCheval.setDateNaissance(dateNaissanceStr);
                 }
 
                 // Récupération et attribution de la race
