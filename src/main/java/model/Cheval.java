@@ -1,14 +1,17 @@
 package model;
 
-import java.time.LocalDate;
+
+import java.util.ArrayList;
 
 public class Cheval {
 
     private int id;
     private String nom;
-    private LocalDate dateNaissance;
+    private String dateNaissance;
 
     private Race race;
+    private ArrayList<Cheval> LesChevauxParents;
+   
 
     public Cheval() {
     }
@@ -29,11 +32,11 @@ public class Cheval {
         this.nom = nom;
     }
 
-    public LocalDate getDateNaissance() {
+    public String getDateNaissance() {
         return dateNaissance;
     }
 
-    public void setDateNaissance(LocalDate dateNaissance) {
+    public void setDateNaissance(String dateNaissance) {
         this.dateNaissance = dateNaissance;
     }
     public Race getRace() {
@@ -42,4 +45,26 @@ public class Cheval {
     public void setRace(Race race) {
         this.race = race;
     }
+    
+    public ArrayList<Cheval> getLesChevauxParents() {
+        return LesChevauxParents;
+    }
+
+    public void setLesCheveauxParents(ArrayList<Cheval> LesChevauxParents) {
+        this.LesChevauxParents = LesChevauxParents;
+    }
+
+    
+    public void addUnChevalParent(Cheval unChevalParent) {
+        if (LesChevauxParents == null) {
+            LesChevauxParents = new ArrayList<>();
+        }
+        LesChevauxParents.add(unChevalParent);
+        
+       
+    }
+
+   
+
+   
 }
