@@ -12,8 +12,8 @@ public class TestCategVente {
         CategVente c = new CategVente(1, "chevalquicourtvite");
 
         // 2. Instanciation de deux ventes
-        Vente v1 = new Vente(101, "cheval", LocalDate.of(2025, 9, 1));
-        Vente v2 = new Vente(102, "cheval3", LocalDate.now());
+        Vente v1 = new Vente(101, "cheval", "2001-09-09");
+        Vente v2 = new Vente(102, "cheval3", "1945-08-06");
 
         // 3. Ajout des ventes dans la catégorie
         c.addUneVente(v1);
@@ -25,7 +25,7 @@ public class TestCategVente {
 
         // 5. Parcours et affichage des ventes
         for (Vente v : c.getLesVentes()) {
-            System.out.println(" -> ID : " + v.getId() + " | Nom : " + v.getNom());
+            System.out.println(" -> ID : " + v.getId() + " | Nom : " + v.getNom() + " | Date du debut de la vente : "+ v.getDebutVente());
         }
     }
 }
