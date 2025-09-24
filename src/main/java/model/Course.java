@@ -1,15 +1,15 @@
 package model;
 
-
+import java.util.Date;
 
 public class Course {
 
-    private int id ;
+    private int id;
     private String nom;
     private String lieu;
-    private String date;
+    private Date date;  
 
-    public Course(int id, String nom, String lieu, String date) {
+    public Course(int id, String nom, String lieu, Date date) {
         this.id = id;
         this.nom = nom;
         this.lieu = lieu;
@@ -28,7 +28,7 @@ public class Course {
         return lieu;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
@@ -44,10 +44,8 @@ public class Course {
         this.lieu = lieu;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
-    
-    
-}
 
+}

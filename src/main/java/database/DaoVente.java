@@ -1,6 +1,5 @@
 package database;
 
-
 import model.Lieu;
 import model.Vente;
 import java.sql.Connection;
@@ -15,27 +14,31 @@ public class DaoVente {
     static ResultSet resultatRequete = null;
 
     /**
-     * Récupère tous les chevaux présents dans la base de données avec leurs races associées
+     * Récupère toutes les ventes présentes dans la base de données avec leur lieu associé
      */
     public static ArrayList<Vente> getLesVentes(Connection cnx) {
         ArrayList<Vente> lesVentes = new ArrayList<Vente>();
         try {
             requeteSql = cnx.prepareStatement(
-                "SELECT vente.id , vente.nom , vente.dateDebutVente , " +
+                "SELECT vente.id, vente.nom, vente.dateDebutVente, " +
                 "lieu.id , lieu.ville " +
                 "FROM vente " +
-                "JOIN lieu ON vente.lieu_id = lieu.id; "
+                "JOIN lieu ON vente.lieu_id = lieu.id"
             );
             resultatRequete = requeteSql.executeQuery();
             while (resultatRequete.next()) {
                 Vente v = new Vente();
                 v.setId(resultatRequete.getInt("vente.id"));
                 v.setNom(resultatRequete.getString("vente.nom"));
-                v.setdateDebutVente(resultatRequete.getString("vente.dateDebutVente"));
+
+                // 🔁 Remplacement de String par Date
+                v.setDateDebutVente(resultatRequete.getDate("vente.dateDebutVente"));
+
                 Lieu l = new Lieu();
                 l.setId(resultatRequete.getInt("lieu.id"));
                 l.setVille(resultatRequete.getString("lieu.ville"));
                 v.setLieu(l);
+
                 lesVentes.add(v);
             }
         } catch (SQLException e) {
@@ -45,12 +48,15 @@ public class DaoVente {
         return lesVentes;
     }
 
-   
+    /**
+     * Récupère une vente par son identifiant
+     */
     public static Vente getLaVente(Connection cnx, int idVente) {
         Vente vente = null;
         try {
             requeteSql = cnx.prepareStatement(
-                "SELECT vente.id , vente.nom , vente.dateDebutVente , lieu.id , lieu.ville  " +
+                "SELECT vente.id, vente.nom, vente.dateDebutVente, " +
+                "lieu.id , lieu.ville " +
                 "FROM vente " +
                 "JOIN lieu ON vente.lieu_id = lieu.id " +
                 "WHERE vente.id = ?"
@@ -61,10 +67,13 @@ public class DaoVente {
                 vente = new Vente();
                 vente.setId(resultatRequete.getInt("vente.id"));
                 vente.setNom(resultatRequete.getString("vente.nom"));
-                vente.setdateDebutVente(resultatRequete.getString("vente.dateDebutVente"));
+
+                // 🔁 Remplacement de String par Date
+                vente.setDateDebutVente(resultatRequete.getDate("vente.dateDebutVente"));
+
                 Lieu lieu = new Lieu();
                 lieu.setId(resultatRequete.getInt("lieu.id"));
-                lieu.setVille(resultatRequete.getString("lieu.ville")); 
+                lieu.setVille(resultatRequete.getString("lieu.ville"));
                 vente.setLieu(lieu);
             }
         } catch (SQLException e) {
@@ -75,30 +84,35 @@ public class DaoVente {
     }
 
     /**
-     * Ajoute une nouvelle ventedans la base de données
+     * Ajoute une nouvelle vente dans la base de données
      */
     public static boolean ajouterVente(Connection cnx, Vente vente) {
         try {
-            requeteSql = cnx.prepareStatement(
-                "INSERT INTO vente (nom, dateDebutVente, categvente_code , lieu_id) VALUES (?, ?, ?, ?)",
+            PreparedStatement requeteSql = cnx.prepareStatement(
+                "INSERT INTO vente (nom, dateDebutVente, categvente_code, lieu_id) VALUES (?, ?, ?, ?)",
                 PreparedStatement.RETURN_GENERATED_KEYS
             );
+
             requeteSql.setString(1, vente.getNom());
 
-            
+            // 🔁 Conversion java.util.Date -> java.sql.Date
+            java.util.Date dateDebut = vente.getDateDebutVente();
+            java.sql.Date sqlDateDebut = new java.sql.Date(dateDebut.getTime());
+            requeteSql.setDate(2, sqlDateDebut);
 
-            requeteSql.setInt(3, vente.getLieu().getId());
+            requeteSql.setInt(3, vente.getCategVente().getId());
+            requeteSql.setInt(4, vente.getLieu().getId());
 
             int result = requeteSql.executeUpdate();
 
             if (result == 1) {
-                // Récupération de l'id auto-généré
                 ResultSet rs = requeteSql.getGeneratedKeys();
                 if (rs.next()) {
                     vente.setId(rs.getInt(1));
                 }
                 return true;
             }
+
             return false;
 
         } catch (SQLException e) {

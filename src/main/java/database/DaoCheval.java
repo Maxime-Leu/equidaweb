@@ -21,7 +21,7 @@ public class DaoCheval {
         ArrayList<Cheval> lesChevaux = new ArrayList<Cheval>();
         try {
             requeteSql = cnx.prepareStatement(
-                "SELECT cheval.id, cheval.nom, " +
+                "SELECT cheval.id, cheval.nom, cheval.dateNaissance, " +
                 "race.id , race.libelle " +
                 "FROM cheval " +
                 "JOIN race ON cheval.race_id = race.id; "
@@ -31,6 +31,7 @@ public class DaoCheval {
                 Cheval c = new Cheval();
                 c.setId(resultatRequete.getInt("cheval.id"));
                 c.setNom(resultatRequete.getString("cheval.nom"));
+                c.setDateNaissance(resultatRequete.getDate("cheval.dateNaissance"));
                 Race r = new Race();
                 r.setId(resultatRequete.getInt("race.id"));
                 r.setNom(resultatRequete.getString("race.libelle"));
@@ -45,13 +46,13 @@ public class DaoCheval {
     }
 
     /**
-     * ✅ CORRIGÉ : Récupère un cheval spécifique par son identifiant
+     *  Récupère un cheval spécifique par son identifiant
      */
     public static Cheval getLeCheval(Connection cnx, int idCheval) {
         Cheval cheval = null;
         try {
             requeteSql = cnx.prepareStatement(
-                "SELECT cheval.id , cheval.nom , race.id , race.libelle  " +
+                "SELECT cheval.id , cheval.nom , cheval.dateNaissnce, race.id , race.libelle  " +
                 "FROM cheval  " +
                 "JOIN race ON cheval.race_id = race.id " +
                 "WHERE cheval.id = ?"
@@ -62,6 +63,7 @@ public class DaoCheval {
                 cheval = new Cheval();
                 cheval.setId(resultatRequete.getInt("cheval.id"));
                 cheval.setNom(resultatRequete.getString("cheval.nom"));
+                cheval.setDateNaissance(resultatRequete.getDate("cheval.dateNaissance"));
                 Race race = new Race();
                 race.setId(resultatRequete.getInt("race.id"));
                 race.setNom(resultatRequete.getString("race.libelle")); 
@@ -78,38 +80,40 @@ public class DaoCheval {
      * Ajoute un nouveau cheval dans la base de données
      */
     public static boolean ajouterCheval(Connection cnx, Cheval cheval) {
-        try {
-            requeteSql = cnx.prepareStatement(
-                "INSERT INTO cheval (nom, date_naissance, race_id) VALUES (?, ?, ?)",
-                PreparedStatement.RETURN_GENERATED_KEYS
-            );
-            requeteSql.setString(1, cheval.getNom());
+    try {
+        requeteSql = cnx.prepareStatement(
+            "INSERT INTO cheval (nom, date_naissance, race_id) VALUES (?, ?, ?)",
+            PreparedStatement.RETURN_GENERATED_KEYS
+        );
+        requeteSql.setString(1, cheval.getNom());
 
-            // Gestion de la date de naissance
-            if (cheval.getDateNaissance() != null) {
-                requeteSql.setDate(2, java.sql.Date.valueOf(cheval.getDateNaissance()));
-            } else {
-                requeteSql.setNull(2, java.sql.Types.DATE);
-            }
-
-            requeteSql.setInt(3, cheval.getRace().getId());
-
-            int result = requeteSql.executeUpdate();
-
-            if (result == 1) {
-                // Récupération de l'id auto-généré
-                ResultSet rs = requeteSql.getGeneratedKeys();
-                if (rs.next()) {
-                    cheval.setId(rs.getInt(1));
-                }
-                return true;
-            }
-            return false;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Erreur lors de l'ajout du cheval");
-            return false;
+        // Gestion de la date de naissance (java.util.Date)
+        if (cheval.getDateNaissance() != null) {
+            java.util.Date utilDate = cheval.getDateNaissance();
+            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+            requeteSql.setDate(2, sqlDate);
+        } else {
+            requeteSql.setNull(2, java.sql.Types.DATE);
         }
+
+        requeteSql.setInt(3, cheval.getRace().getId());
+
+        int result = requeteSql.executeUpdate();
+
+        if (result == 1) {
+            // Récupération de l'id auto-généré
+            ResultSet rs = requeteSql.getGeneratedKeys();
+            if (rs.next()) {
+                cheval.setId(rs.getInt(1));
+            }
+            return true;
+        }
+        return false;
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        System.out.println("Erreur lors de l'ajout du cheval");
+        return false;
     }
+}
 }
