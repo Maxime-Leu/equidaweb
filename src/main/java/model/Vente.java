@@ -1,15 +1,15 @@
 package model;
 
-
 import java.util.ArrayList;
+import java.util.Date; 
 import model.Lot;
 
 public class Vente {
 
     private int id;
     private String nom;
-    private String dateDebutVente;
-    
+    private Date dateDebutVente; 
+
     private CategVente categvente;
     private Lieu lieu;
     private ArrayList<Lot> lesLots;
@@ -17,18 +17,20 @@ public class Vente {
     public Vente() {
     }
 
+    public Vente(int id, String nom, Date dateDebutVente) {
+        this.id = id;
+        this.nom = nom;
+        this.dateDebutVente = dateDebutVente;
+    }
+
+   
+
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public Vente(int id, String nom, String dateDebutVente) {
-        this.id = id;
-        this.nom = nom;
-        this.dateDebutVente = dateDebutVente;
     }
 
     public String getNom() {
@@ -39,17 +41,18 @@ public class Vente {
         this.nom = nom;
     }
 
-    public String getDebutVente() {
+    public Date getDateDebutVente() {
         return dateDebutVente;
     }
 
-    public void setdateDebutVente(String dateDebutVente) {
+    public void setDateDebutVente(Date dateDebutVente) {
         this.dateDebutVente = dateDebutVente;
     }
-    
+
     public CategVente getCategVente() {
         return categvente;
     }
+
     public void setCategVente(CategVente categvente) {
         this.categvente = categvente;
     }
@@ -61,7 +64,7 @@ public class Vente {
     public void setLieu(Lieu lieu) {
         this.lieu = lieu;
     }
-    
+
     public ArrayList<Lot> getLesLots() {
         return lesLots;
     }
@@ -70,12 +73,11 @@ public class Vente {
         this.lesLots = lesLots;
     }
 
-    public void addUnLot(Lot unLot){
-        if (lesLots == null){
+    public void addUnLot(Lot unLot) {
+        if (lesLots == null) {
             lesLots = new ArrayList<Lot>();
         }
         lesLots.add(unLot);
     }
-    
-    
 }
+

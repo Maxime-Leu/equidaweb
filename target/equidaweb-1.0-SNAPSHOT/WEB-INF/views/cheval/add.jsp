@@ -54,6 +54,27 @@
                                 </div>
                             </div>
 
+                            <!-- Sexe -->
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Sexe *</label>
+                                <div class="col-sm-9">
+                                    <label class="radio-inline">
+                                        <input type="radio" name="sexe" value="M" required> M
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="sexe" value="F"> F
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Sire -->
+                            <div class="form-group">
+                                <label for="sire" class="col-sm-3 control-label">SIRE *</label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="sire" id="sire" class="form-control" placeholder="Ex : S123" pattern="S\d{3}" title="Doit commencer par 'S' suivi de 3 chiffres" required>
+                                </div>
+                            </div>
+
                             <!-- Date de naissance -->
                             <div class="form-group">
                                 <label for="dateNaissance" class="col-sm-3 control-label">Date de naissance</label>
@@ -68,13 +89,18 @@
                                 <div class="col-sm-9">
                                     <select name="race" id="race" class="form-control" required>
                                         <option value="">Sélectionnez une race</option>
-                                        <% ArrayList<Race> lesRaces = (ArrayList<Race>)request.getAttribute("pLesRaces");
-                                           if (lesRaces != null) {
-                                               for(Race race : lesRaces) { %>
-                                                   <option value="<%= race.getId() %>">
-                                                       <%= race.getNom() %>
-                                                   </option>
-                                        <% }} %>
+                                        <% 
+                                            ArrayList<Race> lesRaces = (ArrayList<Race>)request.getAttribute("pLesRaces");
+                                            if (lesRaces != null) {
+                                                for(Race race : lesRaces) { 
+                                        %>
+                                            <option value="<%= race.getId() %>">
+                                                <%= race.getNom() %>
+                                            </option>
+                                        <% 
+                                                }
+                                            } 
+                                        %>
                                     </select>
                                 </div>
                             </div>

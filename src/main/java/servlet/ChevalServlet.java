@@ -13,6 +13,9 @@ import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import model.Cheval;
 import model.Race;
 
@@ -73,47 +76,58 @@ public class ChevalServlet extends HttpServlet {
         String path = request.getPathInfo();
 
         if ("/add".equals(path)) {
+    try {
+       
+        String nom = request.getParameter("nom");
+        String dateNaissanceStr = request.getParameter("dateNaissance");
+        int raceId = Integer.parseInt(request.getParameter("race"));
+        String sexe = request.getParameter("sexe");
+        String sire = request.getParameter("sire");
+        
+
+       
+        Cheval nouveauCheval = new Cheval();
+        nouveauCheval.setNom(nom);
+        nouveauCheval.setSexe(sexe);
+        nouveauCheval.setSire(sire);
+
+      
+        if (dateNaissanceStr != null && !dateNaissanceStr.isEmpty()) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             try {
-                // Récupération des données du formulaire
-                String nom = request.getParameter("nom");
-                String dateNaissanceStr = request.getParameter("dateNaissance");
-                int raceId = Integer.parseInt(request.getParameter("race"));
-
-                // Création d'un nouveau cheval
-                Cheval nouveauCheval = new Cheval();
-                nouveauCheval.setNom(nom);
-
-                // Gestion de la date de naissance (en String directement)
-                if (dateNaissanceStr != null && !dateNaissanceStr.isEmpty()) {
-                    nouveauCheval.setDateNaissance(dateNaissanceStr);
-                }
-
-                // Récupération et attribution de la race
-                Race race = DaoRace.getRaceById(cnx, raceId);
-                if (race != null) {
-                    nouveauCheval.setRace(race);
-                } else {
-                    throw new Exception("La race sélectionnée n'existe pas");
-                }
-
-                // Tentative d'ajout en base de données
-                if (DaoCheval.ajouterCheval(cnx, nouveauCheval)) {
-                    // Redirection vers la page de consultation du cheval nouvellement créé
-                    response.sendRedirect(request.getContextPath() + "/cheval-servlet/show?idCheval=" + nouveauCheval.getId());
-                } else {
-                    throw new Exception("Erreur lors de l'enregistrement du cheval");
-                }
-
-            } catch (NumberFormatException e) {
-                request.setAttribute("message", "Erreur : la race sélectionnée n'est pas valide");
-                request.setAttribute("pLesRaces", DaoRace.getLesRaces(cnx));
-                this.getServletContext().getRequestDispatcher("/WEB-INF/views/cheval/add.jsp").forward(request, response);
-            } catch (Exception e) {
-                request.setAttribute("message", "Erreur : " + e.getMessage());
-                request.setAttribute("pLesRaces", DaoRace.getLesRaces(cnx));
-                this.getServletContext().getRequestDispatcher("/WEB-INF/views/cheval/add.jsp").forward(request, response);
+                Date dateNaissance = (Date) sdf.parse(dateNaissanceStr);
+                nouveauCheval.setDateNaissance(dateNaissance);
+            } catch (ParseException e) {
+                throw new Exception("Format de date invalide (attendu : yyyy-MM-dd)");
             }
         }
+
+       
+        Race race = DaoRace.getRaceById(cnx, raceId);
+        if (race != null) {
+            nouveauCheval.setRace(race);
+        } else {
+            throw new Exception("La race sélectionnée n'existe pas");
+        }
+
+        
+        if (DaoCheval.ajouterCheval(cnx, nouveauCheval)) {
+            
+            response.sendRedirect(request.getContextPath() + "/cheval-servlet/show?idCheval=" + nouveauCheval.getId());
+        } else {
+            throw new Exception("Erreur lors de l'enregistrement du cheval");
+        }
+
+    } catch (NumberFormatException e) {
+        request.setAttribute("message", "Erreur : la race sélectionnée n'est pas valide");
+        request.setAttribute("pLesRaces", DaoRace.getLesRaces(cnx));
+        this.getServletContext().getRequestDispatcher("/WEB-INF/views/cheval/add.jsp").forward(request, response);
+    } catch (Exception e) {
+        request.setAttribute("message", "Erreur : " + e.getMessage());
+        request.setAttribute("pLesRaces", DaoRace.getLesRaces(cnx));
+        this.getServletContext().getRequestDispatcher("/WEB-INF/views/cheval/add.jsp").forward(request, response);
+    }
+}
     }
 
     public void destroy() {

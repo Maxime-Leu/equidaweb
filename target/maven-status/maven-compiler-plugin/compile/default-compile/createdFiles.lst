@@ -4,12 +4,14 @@ sio\equidaweb\resources\JakartaEE10Resource.class
 model\CategVente.class
 model\Course.class
 database\Connexionbdd.class
+servlet\VenteServlet.class
 model\Vente.class
 test\TestRace.class
 database\ConnexionServlet.class
 servlet\ChevalServlet.class
 model\Lieu.class
 model\Enchere.class
+database\DaoVente.class
 database\DaoCheval.class
 database\DaoRace.class
 test\TestCheval.class

@@ -1,33 +1,45 @@
 package test;
 
-import java.time.LocalDate;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import model.CategVente;
 import model.Vente;
 
-
 public class TestCategVente {
     public static void main(String[] args) {
-        
-        // 1. Instanciation d’une catégorie
-        CategVente c = new CategVente(1, "chevalquicourtvite");
+        try {
+           
+            CategVente c = new CategVente(1, "chevalquicourtvite");
 
-        // 2. Instanciation de deux ventes
-        Vente v1 = new Vente(101, "cheval", "2001-09-09");
-        Vente v2 = new Vente(102, "cheval3", "1945-08-06");
 
-        // 3. Ajout des ventes dans la catégorie
-        c.addUneVente(v1);
-        c.addUneVente(v2);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-        // 4. Affichage des informations de la catégorie
-        System.out.println("Catégorie : " + c.getLibelle());
-        System.out.println("Liste des ventes : ");
+          
+            Date date1 = sdf.parse("2001-09-09");
+            Date date2 = sdf.parse("1945-08-06");
 
-        // 5. Parcours et affichage des ventes
-        for (Vente v : c.getLesVentes()) {
-            System.out.println(" -> ID : " + v.getId() + " | Nom : " + v.getNom() + " | Date du debut de la vente : "+ v.getDebutVente());
+            Vente v1 = new Vente(101, "cheval", date1);
+            Vente v2 = new Vente(102, "cheval3", date2);
+
+           
+            c.addUneVente(v1);
+            c.addUneVente(v2);
+
+          
+            System.out.println("Catégorie : " + c.getLibelle());
+            System.out.println("Liste des ventes :");
+
+           
+            for (Vente v : c.getLesVentes()) {
+                System.out.println(" -> ID : " + v.getId()
+                        + " | Nom : " + v.getNom()
+                        + " | Date du début de la vente : " + sdf.format(v.getDateDebutVente()));
+            }
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+            System.out.println("Erreur lors du parsing de la date.");
         }
     }
 }
-
-
