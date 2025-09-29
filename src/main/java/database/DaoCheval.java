@@ -52,7 +52,7 @@ public class DaoCheval {
         Cheval cheval = null;
         try {
             requeteSql = cnx.prepareStatement(
-                "SELECT cheval.id , cheval.nom , cheval.dateNaissnce, race.id , race.libelle  " +
+                "SELECT cheval.id , cheval.nom , cheval.dateNaissance, race.id , race.libelle  " +
                 "FROM cheval  " +
                 "JOIN race ON cheval.race_id = race.id " +
                 "WHERE cheval.id = ?"
@@ -76,32 +76,31 @@ public class DaoCheval {
         return cheval;
     }
 
-    /**
-     * Ajoute un nouveau cheval dans la base de données
-     */
     public static boolean ajouterCheval(Connection cnx, Cheval cheval) {
     try {
         requeteSql = cnx.prepareStatement(
-            "INSERT INTO cheval (nom, date_naissance, race_id) VALUES (?, ?, ?)",
+            "INSERT INTO cheval (nom, sexe, sire, dateNaissance, race_id) VALUES (?, ?, ?, ?, ?)",
             PreparedStatement.RETURN_GENERATED_KEYS
         );
         requeteSql.setString(1, cheval.getNom());
+        requeteSql.setString(2, cheval.getSexe());  
+        requeteSql.setString(3, cheval.getSire());  
 
-        // Gestion de la date de naissance (java.util.Date)
+        
         if (cheval.getDateNaissance() != null) {
             java.util.Date utilDate = cheval.getDateNaissance();
             java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-            requeteSql.setDate(2, sqlDate);
+            requeteSql.setDate(4, sqlDate);
         } else {
-            requeteSql.setNull(2, java.sql.Types.DATE);
+            requeteSql.setNull(4, java.sql.Types.DATE);
         }
 
-        requeteSql.setInt(3, cheval.getRace().getId());
+       
+        requeteSql.setInt(5, cheval.getRace().getId());
 
         int result = requeteSql.executeUpdate();
 
         if (result == 1) {
-            // Récupération de l'id auto-généré
             ResultSet rs = requeteSql.getGeneratedKeys();
             if (rs.next()) {
                 cheval.setId(rs.getInt(1));
@@ -116,4 +115,5 @@ public class DaoCheval {
         return false;
     }
 }
+
 }

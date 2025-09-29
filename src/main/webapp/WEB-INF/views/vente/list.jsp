@@ -55,7 +55,7 @@
                         <tr>
                             <th>id</th>
                             <th>nom</th>
-                            <th>pays</th>
+                            <th>ville</th>
                         </tr>
                     </thead>
                     <tbody>

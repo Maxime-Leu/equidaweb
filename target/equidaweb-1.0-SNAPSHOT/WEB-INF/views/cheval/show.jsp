@@ -80,13 +80,25 @@
                                     <%= leCheval.getRace() != null ? leCheval.getRace().getNom() : "Non renseignée" %>
                                 </div>
                             </div>
+                            
+                            <div class="row detail-row">
+                                <div class="col-sm-3 detail-label">Sexe</div>
+                                <div class="col-sm-9 detail-value"><%= leCheval.getSexe() %></div>
+                            </div>
+                            
+                            
+                            <div class="row detail-row">
+                                <div class="col-sm-3 detail-label">Sire</div>
+                                <div class="col-sm-9 detail-value"><%= leCheval.getSire() %></div>
+                            </div>                           
+                                
 
                             <div class="row" style="margin-top: 30px;">
                                 <div class="col-sm-offset-3 col-sm-9">
                                     <a href="<%= request.getContextPath() %>/cheval-servlet/list" class="btn btn-default">
                                         <span class="glyphicon glyphicon-arrow-left"></span> Retour à la liste
                                     </a>
-                                    <!-- Vous pouvez ajouter d'autres boutons ici, comme Modifier ou Supprimer -->
+                                   
                                 </div>
                             </div>
                         <% } else { %>

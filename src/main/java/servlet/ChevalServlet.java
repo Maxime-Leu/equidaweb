@@ -13,7 +13,7 @@ import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
-import java.sql.Date;
+import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import model.Cheval;
@@ -77,16 +77,21 @@ public class ChevalServlet extends HttpServlet {
 
         if ("/add".equals(path)) {
     try {
-        // Récupération des données du formulaire
+       
         String nom = request.getParameter("nom");
         String dateNaissanceStr = request.getParameter("dateNaissance");
         int raceId = Integer.parseInt(request.getParameter("race"));
+        String sexe = request.getParameter("sexe");
+        String sire = request.getParameter("sire");
+        
 
-        // Création d'un nouveau cheval
+       
         Cheval nouveauCheval = new Cheval();
         nouveauCheval.setNom(nom);
+        nouveauCheval.setSexe(sexe);
+        nouveauCheval.setSire(sire);
 
-        // Conversion de la date de naissance String en java.util.Date
+      
         if (dateNaissanceStr != null && !dateNaissanceStr.isEmpty()) {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             try {
@@ -97,7 +102,7 @@ public class ChevalServlet extends HttpServlet {
             }
         }
 
-        // Récupération et attribution de la race
+       
         Race race = DaoRace.getRaceById(cnx, raceId);
         if (race != null) {
             nouveauCheval.setRace(race);
@@ -105,9 +110,9 @@ public class ChevalServlet extends HttpServlet {
             throw new Exception("La race sélectionnée n'existe pas");
         }
 
-        // Tentative d'ajout en base de données
+        
         if (DaoCheval.ajouterCheval(cnx, nouveauCheval)) {
-            // Redirection vers la page de consultation du cheval nouvellement créé
+            
             response.sendRedirect(request.getContextPath() + "/cheval-servlet/show?idCheval=" + nouveauCheval.getId());
         } else {
             throw new Exception("Erreur lors de l'enregistrement du cheval");

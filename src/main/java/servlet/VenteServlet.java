@@ -80,7 +80,7 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
             String nom = request.getParameter("nom");
             String dateDebutVenteStr = request.getParameter("dateDebutVente");
 
-            // Création d'une nouvelle vente
+            
             Vente nouvelleVente = new Vente();
             nouvelleVente.setNom(nom);
 
@@ -91,7 +91,8 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
                 nouvelleVente.setDateDebutVente(dateDebut);
             }
 
-            // ✅ Insertion dans la base
+           
+            
             if (DaoVente.ajouterVente(cnx, nouvelleVente)) {
                 response.sendRedirect(request.getContextPath() + "/vente-servlet/show?id=" + nouvelleVente.getId());
             } else {

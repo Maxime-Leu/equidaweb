@@ -7,12 +7,30 @@ public class Cheval {
 
     private int id;
     private String nom;
-    private Date dateNaissance;  // Passage de String à Date
+    private Date dateNaissance; 
+    private String sire;
+    private String sexe;
 
     private Race race;
     private ArrayList<Cheval> LesChevauxParents;
 
     public Cheval() {
+    }
+
+    public void setSire(String sire) {
+        this.sire = sire;
+    }
+
+    public void setSexe(String sexe) {
+        this.sexe = sexe;
+    }
+
+    public String getSire() {
+        return sire;
+    }
+
+    public String getSexe() {
+        return sexe;
     }
 
     public int getId() {
