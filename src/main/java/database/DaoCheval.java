@@ -14,9 +14,7 @@ public class DaoCheval {
     static PreparedStatement requeteSql = null;
     static ResultSet resultatRequete = null;
 
-    /**
-     * Récupère tous les chevaux présents dans la base de données avec leurs races associées
-     */
+   
     public static ArrayList<Cheval> getLesChevaux(Connection cnx) {
         ArrayList<Cheval> lesChevaux = new ArrayList<Cheval>();
         try {
@@ -45,14 +43,12 @@ public class DaoCheval {
         return lesChevaux;
     }
 
-    /**
-     *  Récupère un cheval spécifique par son identifiant
-     */
+    
     public static Cheval getLeCheval(Connection cnx, int idCheval) {
         Cheval cheval = null;
         try {
             requeteSql = cnx.prepareStatement(
-                "SELECT cheval.id , cheval.nom , cheval.dateNaissance, race.id , race.libelle  " +
+                "SELECT cheval.id , cheval.nom , cheval.dateNaissance, cheval.sexe, cheval.sire, race.id , race.libelle  " +
                 "FROM cheval  " +
                 "JOIN race ON cheval.race_id = race.id " +
                 "WHERE cheval.id = ?"
@@ -64,6 +60,8 @@ public class DaoCheval {
                 cheval.setId(resultatRequete.getInt("cheval.id"));
                 cheval.setNom(resultatRequete.getString("cheval.nom"));
                 cheval.setDateNaissance(resultatRequete.getDate("cheval.dateNaissance"));
+                cheval.setSexe(resultatRequete.getString("cheval.sexe"));
+                cheval.setSire(resultatRequete.getString("cheval.sire"));
                 Race race = new Race();
                 race.setId(resultatRequete.getInt("race.id"));
                 race.setNom(resultatRequete.getString("race.libelle")); 

@@ -13,9 +13,7 @@ public class DaoVente {
     static PreparedStatement requeteSql = null;
     static ResultSet resultatRequete = null;
 
-    /**
-     * Récupère toutes les ventes présentes dans la base de données avec leur lieu associé
-     */
+   
     public static ArrayList<Vente> getLesVentes(Connection cnx) {
         ArrayList<Vente> lesVentes = new ArrayList<Vente>();
         try {
@@ -31,7 +29,7 @@ public class DaoVente {
                 v.setId(resultatRequete.getInt("vente.id"));
                 v.setNom(resultatRequete.getString("vente.nom"));
 
-                // 🔁 Remplacement de String par Date
+          
                 v.setDateDebutVente(resultatRequete.getDate("vente.dateDebutVente"));
 
                 Lieu l = new Lieu();
@@ -48,9 +46,7 @@ public class DaoVente {
         return lesVentes;
     }
 
-    /**
-     * Récupère une vente par son identifiant
-     */
+
     public static Vente getLaVente(Connection cnx, int idVente) {
         Vente vente = null;
         try {
@@ -68,7 +64,7 @@ public class DaoVente {
                 vente.setId(resultatRequete.getInt("vente.id"));
                 vente.setNom(resultatRequete.getString("vente.nom"));
 
-                // 🔁 Remplacement de String par Date
+       
                 vente.setDateDebutVente(resultatRequete.getDate("vente.dateDebutVente"));
 
                 Lieu lieu = new Lieu();
@@ -83,9 +79,7 @@ public class DaoVente {
         return vente;
     }
 
-    /**
-     * Ajoute une nouvelle vente dans la base de données
-     */
+    
     public static boolean ajouterVente(Connection cnx, Vente vente) {
         try {
             PreparedStatement requeteSql = cnx.prepareStatement(
@@ -95,7 +89,7 @@ public class DaoVente {
 
             requeteSql.setString(1, vente.getNom());
 
-            // 🔁 Conversion java.util.Date -> java.sql.Date
+       
             java.util.Date dateDebut = vente.getDateDebutVente();
             java.sql.Date sqlDateDebut = new java.sql.Date(dateDebut.getTime());
             requeteSql.setDate(2, sqlDateDebut);
