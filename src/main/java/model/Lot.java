@@ -53,13 +53,13 @@ public class Lot {
         this.lesEncheres = lesEncheres;
     }
 
-    // méthode utilitaire pour ajouter une enchère
+   
     public void addUneEnchere(Enchere uneEnchere) {
         if (lesEncheres == null) {
             lesEncheres = new ArrayList<>();
         }
         lesEncheres.add(uneEnchere);
-        // on lie aussi l'enchère au lot
+       
         uneEnchere.setLot(this);
     }
     

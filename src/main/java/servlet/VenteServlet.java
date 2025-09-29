@@ -1,5 +1,6 @@
 package servlet;
 
+import database.DaoLot;
 import java.io.*;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -15,6 +16,7 @@ import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import model.Cheval;
 
 import model.Race;
 import model.Vente;
@@ -48,9 +50,12 @@ public class VenteServlet extends HttpServlet {
             try {
                 int idVente = Integer.parseInt(request.getParameter("idVente"));
                 Vente laVente = DaoVente.getLaVente(cnx, idVente);
-
+                ArrayList<Cheval> chevaux = DaoLot.getChevauxEnVente(cnx, idVente);
+                System.out.println("NB CHEVAUX LOT"+chevaux.size());
+                
                 if (laVente != null) {
                     request.setAttribute("pLaVente", laVente);
+                    request.setAttribute("pLesChevauxEnVente", chevaux);
                     this.getServletContext().getRequestDispatcher("/WEB-INF/views/vente/show.jsp").forward(request, response);
                 } else {
                     response.sendRedirect(request.getContextPath() + "/vente-servlet/lister");

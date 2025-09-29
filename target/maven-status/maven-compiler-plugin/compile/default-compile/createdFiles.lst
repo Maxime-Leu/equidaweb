@@ -2,6 +2,7 @@ test\TestCategVente.class
 model\Cheval.class
 sio\equidaweb\resources\JakartaEE10Resource.class
 model\CategVente.class
+database\DaoLot.class
 model\Course.class
 database\Connexionbdd.class
 servlet\VenteServlet.class
