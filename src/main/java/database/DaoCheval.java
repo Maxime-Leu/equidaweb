@@ -8,6 +8,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import model.ChevalCourse;
+import model.Course;
 
 public class DaoCheval {
     Connection cnx;
@@ -112,6 +114,43 @@ public class DaoCheval {
         System.out.println("Erreur lors de l'ajout du cheval");
         return false;
     }
+} 
+    
+    public static ArrayList<ChevalCourse> getLesCoursesByCheval(Connection cnx, int idCheval) {
+    ArrayList<ChevalCourse> chevalCourses = new ArrayList<>();
+
+    try {
+        requeteSql = cnx.prepareStatement(
+            "SELECT cc.position, c.nom AS course_nom, c.date AS course_date " +
+            "FROM cheval_course cc " +
+            "JOIN course c ON cc.course_id = c.id " +
+            "WHERE cc.cheval_id = ?"
+        );
+        requeteSql.setInt(1, idCheval);
+        resultatRequete = requeteSql.executeQuery();
+
+        while (resultatRequete.next()) {
+         
+            ChevalCourse chevalCourse = new ChevalCourse();
+            chevalCourse.setPosition(resultatRequete.getInt("cc.position"));
+
+           
+            Course course = new Course();
+            course.setNom(resultatRequete.getString("course_nom"));
+            course.setDate(resultatRequete.getDate("course_date"));
+
+            chevalCourse.setCourse(course);
+            chevalCourses.add(chevalCourse);
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+        System.out.println("La requête de getLesCoursesByCheval a généré une exception SQL");
+    }
+
+    return chevalCourses;
+}
 }
 
-}
+
+
+

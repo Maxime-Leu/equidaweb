@@ -13,6 +13,7 @@ public class Cheval {
 
     private Race race;
     private ArrayList<Cheval> LesChevauxParents;
+    private ArrayList<ChevalCourse> LesCoursesByCheval;
 
     public Cheval() {
     }
@@ -79,4 +80,14 @@ public class Cheval {
         }
         LesChevauxParents.add(unChevalParent);
     }
+    
+    public ArrayList<ChevalCourse> getLesCoursesByCheval() {
+        return LesCoursesByCheval;
+    }
+
+    public void setLesCoursesByCheval(ArrayList<ChevalCourse> LesCoursesByCheval) {
+        this.LesCoursesByCheval = LesCoursesByCheval;
+    }
+
+    
 }

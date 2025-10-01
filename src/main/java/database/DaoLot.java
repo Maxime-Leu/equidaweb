@@ -42,9 +42,9 @@ public class DaoLot {
                 Race race = new Race();
                 race.setId(resultatRequete.getInt("race_id"));
                 race.setNom(resultatRequete.getString("race_libelle"));
-                cheval.setRace(race);
+                chevaux.add(cheval);   cheval.setRace(race);
 
-            chevaux.add(cheval);
+         
             }
         } catch (SQLException e) {
             e.printStackTrace();
