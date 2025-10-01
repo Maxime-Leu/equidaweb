@@ -10,7 +10,9 @@ public class Cheval {
     private Date dateNaissance; 
     private String sire;
     private String sexe;
-
+    
+    private Cheval chevalPere;
+    private Cheval chevalMere; 
     private Race race;
     private ArrayList<Cheval> LesChevauxParents;
     private ArrayList<ChevalCourse> LesCoursesByCheval;
@@ -18,6 +20,22 @@ public class Cheval {
     public Cheval() {
     }
 
+    public Cheval getChevalPere() {
+        return chevalPere;
+    }
+
+    public Cheval getChevalMere() {
+        return chevalMere;
+    }
+
+    public void setChevalPere(Cheval chevalPere) {
+        this.chevalPere = chevalPere;
+    }
+
+    public void setChevalMere(Cheval chevalMere) {
+        this.chevalMere = chevalMere;
+    }
+    
     public void setSire(String sire) {
         this.sire = sire;
     }
