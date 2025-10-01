@@ -45,8 +45,7 @@
                         <h2>Ajouter un nouveau cheval</h2>
                         
                         <form class="form-horizontal" action="<%= request.getContextPath() %>/cheval-servlet/add" method="POST">
-                            
-                            <!-- Nom du cheval -->
+                       
                             <div class="form-group">
                                 <label for="nom" class="col-sm-3 control-label">Nom *</label>
                                 <div class="col-sm-9">
@@ -54,7 +53,7 @@
                                 </div>
                             </div>
 
-                            <!-- Sexe -->
+                     
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Sexe *</label>
                                 <div class="col-sm-9">
@@ -67,7 +66,7 @@
                                 </div>
                             </div>
 
-                            <!-- Sire -->
+                      
                             <div class="form-group">
                                 <label for="sire" class="col-sm-3 control-label">SIRE *</label>
                                 <div class="col-sm-9">
@@ -75,7 +74,7 @@
                                 </div>
                             </div>
 
-                            <!-- Date de naissance -->
+                         
                             <div class="form-group">
                                 <label for="dateNaissance" class="col-sm-3 control-label">Date de naissance</label>
                                 <div class="col-sm-9">
@@ -83,7 +82,7 @@
                                 </div>
                             </div>
 
-                            <!-- Race -->
+                        
                             <div class="form-group">
                                 <label for="race" class="col-sm-3 control-label">Race *</label>
                                 <div class="col-sm-9">
@@ -105,11 +104,13 @@
                                 </div>
                             </div>
 
-                            <!-- Boutons -->
+                         
                             <div class="form-group">
                                 <div class="col-sm-offset-3 col-sm-9">
                                     <button type="submit" class="btn btn-primary">
+                                       
                                         <span class="glyphicon glyphicon-plus"></span> Ajouter
+                                        
                                     </button>
                                     <a href="<%= request.getContextPath() %>/cheval-servlet/list" class="btn btn-default">
                                         <span class="glyphicon glyphicon-remove"></span> Annuler
@@ -117,7 +118,7 @@
                                 </div>
                             </div>
 
-                            <!-- Message d'erreur -->
+                     
                             <% if(request.getAttribute("message") != null) { %>
                                 <div class="alert alert-danger">
                                     <%= request.getAttribute("message") %>
