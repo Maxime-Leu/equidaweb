@@ -19,7 +19,8 @@ public class TestConnexionBdd {
         System.out.println ("nombre de ventes = " + DaoVente.getLesVentes(cnx).size());
         System.out.println ("La vente numero 3 = " + DaoVente.getLaVente(cnx, 3).getNom());*/
     
-        System.out.println ("nombre de chevaux = " + DaoLot.getChevauxEnVente(cnx, 2).size());
+        /*System.out.println ("nombre de chevaux = " + DaoLot.getChevauxEnVente(cnx, 2).size());*/
+        System.out.println ("course = " + DaoCheval.getLesCoursesByCheval(cnx, 1).size());
     
     }
 

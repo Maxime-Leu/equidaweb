@@ -95,6 +95,7 @@
                                 <th>Sire</th>
                                 <th>Date de naissance</th>
                                 <th>Race</th>
+                                <th>PrixDepart</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -105,6 +106,8 @@
                                     <td><%= cheval.getSire() %></td>
                                     <td><%= cheval.getDateNaissance() != null ? cheval.getDateNaissance().toString() : "-" %></td>
                                     <td><%= cheval.getRace() != null ? cheval.getRace().getNom() : "-" %></td>
+                                    
+                                    
                                 </tr>
                             <% } %>
                         </tbody>
@@ -112,7 +115,7 @@
                 <%
                     } else {
                 %>
-                    <p>Aucun cheval enregistré pour cette vente.</p>
+                    <p>erreur</p>
                 <%
                     }
                 %>

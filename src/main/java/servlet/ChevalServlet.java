@@ -17,6 +17,7 @@ import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import model.Cheval;
+import model.ChevalCourse;
 import model.Race;
 
 @WebServlet(name = "chevalServlet", value = "/cheval-servlet/*")
@@ -48,9 +49,11 @@ public class ChevalServlet extends HttpServlet {
             try {
                 int idCheval = Integer.parseInt(request.getParameter("idCheval"));
                 Cheval leCheval = DaoCheval.getLeCheval(cnx, idCheval);
-
+                ArrayList<ChevalCourse> chevalCourses = DaoCheval.getLesCoursesByCheval(cnx, idCheval);
+                System.out.println("COURSE"+chevalCourses.size());
                 if (leCheval != null) {
                     request.setAttribute("pLeCheval", leCheval);
+                    request.setAttribute("pChevalCourses", chevalCourses);
                     this.getServletContext().getRequestDispatcher("/WEB-INF/views/cheval/show.jsp").forward(request, response);
                 } else {
                     response.sendRedirect(request.getContextPath() + "/cheval-servlet/lister");

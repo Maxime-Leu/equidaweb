@@ -1,3 +1,4 @@
+<%@page import="java.util.ArrayList"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="model.Cheval" %>
 
@@ -101,6 +102,40 @@
                                    
                                 </div>
                             </div>
+                                        
+                            <%
+                                ArrayList<model.ChevalCourse> chevalCourses = (ArrayList<model.ChevalCourse>) request.getAttribute("pChevalCourses");
+                            %>
+
+                            <div class="row detail-row">
+                                <div class="col-sm-12">
+                            <h4>Courses associées</h4>
+
+                            <% if (chevalCourses != null && chevalCourses.isEmpty()) { %>
+                            <p>Aucune course associée à ce cheval.</p>
+                            <% } else { %>
+                            <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Nom de la course</th>
+                                    <th>Date</th>
+                                    <th>Position</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% for (model.ChevalCourse cc : chevalCourses) { %>
+                            <tr>
+                                <td><%= cc.getCourse().getNom() %></td>
+                                <td><%= cc.getCourse().getDate() %></td>
+                                <td><%= cc.getPosition() %></td>
+                            </tr>
+                                <% } %>
+                            </tbody>
+                    </table>
+                                <% } %>
+                            </div>
+                        </div>
+                            
                         <% } else { %>
                             <div class="alert alert-danger">
                                 Le cheval demandé n'existe pas.

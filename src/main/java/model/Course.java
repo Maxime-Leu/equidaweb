@@ -16,6 +16,9 @@ public class Course {
         this.date = date;
     }
 
+    public Course() {
+    }
+    
     public int getId() {
         return id;
     }
