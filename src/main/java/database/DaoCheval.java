@@ -56,8 +56,8 @@ public class DaoCheval {
             "mere.id AS mere_id, mere.nom AS mere_nom " +
             "FROM cheval c " +
             "JOIN race r ON c.race_id = r.id " +
-            "JOIN cheval pere ON c.pere_id = pere.id " +
-            "JOIN cheval mere ON c.mere_id = mere.id " +
+            "LEFT JOIN cheval pere ON c.pere_id = pere.id " +
+            "LEFT JOIN cheval mere ON c.mere_id = mere.id " +
             "WHERE c.id = ?"
         );
 
