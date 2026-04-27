@@ -6,7 +6,7 @@ public class Lot {
 
     private int id ;
     private int prixDepart;
-    
+    private Cheval leCheval;
     private Vente vente;
     private ArrayList<Enchere> lesEncheres;
 
@@ -44,7 +44,14 @@ public class Lot {
     public void setVente(Vente vente) {
         this.vente = vente;
     }
-
+    
+    public Cheval getLeCheval(){
+        return leCheval;
+    }
+    
+    public void setLeCheval(Cheval leCheval){
+        this.leCheval = leCheval;
+    }
     public ArrayList<Enchere> getLesEncheres() {
         return lesEncheres;
     }

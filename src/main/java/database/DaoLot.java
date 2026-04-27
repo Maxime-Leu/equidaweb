@@ -52,5 +52,28 @@ public class DaoLot {
         }
         return chevaux;
     }
+    public static Lot getLeLot(Connection cnx, int idLot) {
+    Lot leLot = null;
+    try {
+       
+        requeteSql = cnx.prepareStatement("SELECT id, prixDepart, cheval_id FROM lot WHERE id = ?");
+        requeteSql.setInt(1, idLot);
+        resultatRequete = requeteSql.executeQuery();
+        
+        if (resultatRequete.next()) {
+            leLot = new Lot();
+            leLot.setId(resultatRequete.getInt("id"));
+            leLot.setPrixDepart(resultatRequete.getInt("prixDepart"));
+            
+            
+            Cheval c = new Cheval();
+            c.setId(resultatRequete.getInt("cheval_id"));
+            leLot.setLeCheval(c); 
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return leLot;
+}
 }
 
