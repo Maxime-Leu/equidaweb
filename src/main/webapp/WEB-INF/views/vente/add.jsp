@@ -22,7 +22,7 @@
     </style>
 </head>
 <body>
-
+<jsp:include page="/WEB-INF/views/header.jsp" />
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
