@@ -43,8 +43,8 @@
         <div class="container special">
             <div class="header-actions">
                 <h2 class="h2">Liste des ventes</h2>
-                <a href="<%= request.getContextPath() %>/cheval-servlet/add" class="btn btn-primary">
-                    <span class="glyphicon glyphicon-plus"></span> Ajouter une vente (pas terminer)
+                <a href="<%= request.getContextPath() %>/vente-servlet/add" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-plus"></span> Ajouter une vente
                 </a>
             </div>
             
