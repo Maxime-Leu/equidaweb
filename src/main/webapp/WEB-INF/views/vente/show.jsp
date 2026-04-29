@@ -39,15 +39,8 @@
     </style>
 </head>
 <body>
-<nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="<%= request.getContextPath() %>/vente-servlet/list">
-                Gestion des ventes
-            </a>
-        </div>
-    </div>
-</nav>
+    <jsp:include page="/WEB-INF/views/header.jsp" />
+
 
 <div class="container special">
     <div class="row">

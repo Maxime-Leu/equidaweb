@@ -28,15 +28,8 @@
         </style>
     </head>
     <body>
-        <nav class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <a href='../ServletCheval/list' class="navbar-brand">
-                        Système de gestion des ventes aux enchères de chevaux
-                    </a>
-                </div>
-            </div>
-        </nav>
+        <jsp:include page="/WEB-INF/views/header.jsp" />
+        
 
         <div class="container special">
             <div class="header-actions">
