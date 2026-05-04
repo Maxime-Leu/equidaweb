@@ -1,4 +1,4 @@
-<# 🐴 EquidaWeb
+EquidaWeb
 
 Application web de gestion des ventes aux enchères équines, développée dans le cadre du **BTS SIO - Épreuve E6**.
 
