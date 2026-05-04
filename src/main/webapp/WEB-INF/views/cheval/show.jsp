@@ -99,7 +99,9 @@
                                 <div class="col-sm-9 detail-value">
                                 <%= leCheval.getChevalMere().getNom()%>
                             </div>
-                            
+                            <a href="edit?idCheval=<%= leCheval.getId() %>" class="btn btn-warning">
+                                <span class="glyphicon glyphicon-pencil"></span> Modifier ce cheval
+                            </a>
 
                             <div class="row" style="margin-top: 30px;">
                                 <div class="col-sm-offset-3 col-sm-9">

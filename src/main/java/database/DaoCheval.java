@@ -170,10 +170,31 @@ public class DaoCheval {
         e.printStackTrace();
         System.out.println("La requête de getLesCoursesByCheval a généré une exception SQL");
     }
-
     return chevalCourses;
 }
-   
+    public static void updateCheval(Connection cnx, Cheval c) {
+    try {
+        String sql = "UPDATE cheval SET nom = ?, sexe = ?, sire = ?, dateNaissance = ?, race_id = ? WHERE id = ?";
+        PreparedStatement ps = cnx.prepareStatement(sql);
+        ps.setString(1, c.getNom());
+        ps.setString(2, c.getSexe());
+        ps.setString(3, c.getSire());
+        
+        // Conversion date util vers sql
+        if (c.getDateNaissance() != null) {
+            ps.setDate(4, new java.sql.Date(c.getDateNaissance().getTime()));
+        } else {
+            ps.setNull(4, java.sql.Types.DATE);
+        }
+        
+        ps.setInt(5, c.getRace().getId());
+        ps.setInt(6, c.getId());
+        
+        ps.executeUpdate();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
 }
 
 
